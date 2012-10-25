@@ -10,41 +10,73 @@
 *
 */
 
+#include <BaseAnalogRead.h>
+#include <BufferedAnalogRead.h> 
+#include <AveragingAnalogRead.h>
+#include <DataNormalizer.h>
 #include <Servo.h>
 #include <SCMScheduler.h>
 #include <SCMProcess.h>
-#include "suntracker.h"
-#include "motor.h"
-#include "calibrationinput.h"
 
+#include "suntracker.h"
+#include "calibrationdata.h"
+
+#include "auxiliaryinputprocess.h"
+#include "diagnosticprocess.h"
+#include "motorprocess.h"
+#include "sensorprocess.h"
+
+DataNormalizer sensors(SensorCount, SensorPins, CalibrationVectorSize, CalibrationVectors, Aperture);
+
+////////////////////////////////////////////////////////////////////////////////
+//
+// Very primitive inter-process communication messages.
+//
+// The software for the sun tracker is simple enough that these are fixed 
+// rather than dynamically allocated.
+//
+////////////////////////////////////////////////////////////////////////////////
+
+SensorReadings sensorReadings;
+AuxiliaryInput auxInput;
 MotorControl baseControl;
 MotorControl sensorControl;
 
+////////////////////////////////////////////////////////////////////////////////
+//
+// Cooperative Multitasking System
+//
+////////////////////////////////////////////////////////////////////////////////
+
 MotorProcess baseMotorProcess;
 MotorProcess sensorMotorProcess;
-CalibrationInput calibrationProcess;
+AuxiliaryInputProcess auxInputProcess;
+SensorProcess sensorProcess;
+DiagnosticProcess diagnosticProcess;
 
-#define PROCESS_COUNT 3
-SCMProcess* processList[PROCESS_COUNT];
-SCMScheduler scheduler(processList, PROCESS_COUNT);
+static const byte ProcessCount = 5;
+SCMProcess* processList[ProcessCount];
+SCMScheduler scheduler(processList, ProcessCount);
 
 void setup()
 {
-  processList[0] = &baseMotorProcess;
-  processList[1] = &sensorMotorProcess;
-  processList[2] = &calibrationProcess;
-  
-  calibrationProcess.configure(&sensorControl);
-  baseMotorProcess.configure(LowerServoPin, &baseControl, BaseServoLowBound, BaseServoMidpoint, BaseServoUpperBound);
-  sensorMotorProcess.configure(UpperServoPin, &sensorControl, SensorServoLowBound, SensorServoMidpoint, SensorServoUpperBound);
-  
   Serial.begin(9600);
+
+  processList[0] = NULL;// &baseMotorProcess;
+  processList[1] = NULL;//&sensorMotorProcess;
+  processList[2] = &auxInputProcess;
+  processList[3] = &sensorProcess;
+  processList[4] = &diagnosticProcess;
+  
+  diagnosticProcess.configure(&auxInput, &sensorReadings);
+  sensorProcess.configure(&sensors, &sensorReadings);
+  auxInputProcess.configure(AuxillaryInputPin, &auxInput);
+  baseMotorProcess.configure(LowerServoPin, &baseControl, BaseServoLowBound, BaseServoMidpoint, BaseServoUpperBound);
+  sensorMotorProcess.configure(UpperServoPin, &sensorControl, SensorServoLowBound, SensorServoMidpoint, SensorServoUpperBound);  
 }
 
 void loop()
 {
   scheduler.run();
 }
-
-
 

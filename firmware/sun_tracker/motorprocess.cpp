@@ -10,7 +10,7 @@
 *
 */
 
-#include "motor.h"
+#include "motorprocess.h"
 
 void MotorProcess::configure(byte aPinNumber, MotorControl* aController, int aLowMicroseconds, int aMidpointMicroseconds, int aHighMicroseconds)
 {
@@ -37,7 +37,9 @@ bool MotorProcess::execute()
 int MotorProcess::targetAsMicroseconds()
 {
   int target = controller->getTarget();
-  if(target < 0)
+  if(target == 0)
+    return midpointUS;
+  else if(target < 0)
     return map(target, MotorControl::Min, 0, lowUS, midpointUS);
   else
     return map(target, 0, MotorControl::Max, midpointUS, highUS);

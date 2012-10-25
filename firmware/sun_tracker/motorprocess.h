@@ -10,8 +10,8 @@
 *
 */
 
-#ifndef MOTOR_H
-#define MOTOR_H
+#ifndef MOTOR_PROCESS_H
+#define MOTOR_PROCESS_H
 
 #include <SCMProcess.h>
 #include "motorcontrol.h"
@@ -44,6 +44,6 @@ class MotorProcess : public SCMProcess
   int targetAsMicroseconds();
 };
 
-#endif//MOTOR_H
+#endif//MOTOR_PROCESS_H
 
 

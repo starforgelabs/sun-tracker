@@ -13,6 +13,8 @@
 #ifndef SUNTRACKER_H
 #define SUNTRACKER_H
 
+#include "Arduino.h"
+
 // These are project-specific constants. 
 
 // Analogue inputs

@@ -10,21 +10,25 @@
 *
 */
 
-#ifndef CALIBRATION_INPUT_H
-#define CALIBRATION_INPUT_H
+#ifndef AUXILIARY_INPUT_PROCESS_H
+#define AUXILIARY_INPUT_PROCESS_H
 
 #include <SCMProcess.h>
-#include "MotorControl.h"
 
-class CalibrationInput : public SCMProcess
+struct AuxiliaryInput {
+  int reading;
+};
+
+class AuxiliaryInputProcess : public SCMProcess
 {
   public:
-  void configure(MotorControl* aControl);
+  void configure(byte aPinNumber, AuxiliaryInput* aAuxiliaryInput);
   virtual bool execute();  
   
   private:
-  MotorControl* controller;
+  byte pin;
+  AuxiliaryInput* output;
 };
 
-#endif//CALIBRATION_INPUT_H
+#endif//AUXILIARY_INPUT_PROCESS_H
 
