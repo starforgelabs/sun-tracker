@@ -18,12 +18,12 @@
 static const byte SensorCount = 4;
 const static byte SensorPins[SensorCount] = {BlueSensorPin, RedSensorPin, YellowSensorPin, GreenSensorPin};
 
-static const byte CalibrationVectorSize = 16;
-static const int Aperture[CalibrationVectorSize]              = {150, 124, 114, 106, 98, 88,  76,  64,  59,  55,  49,  44,  39,  32,  13,  -9 };
-static const int BlueCalibrationData[CalibrationVectorSize]   = {  5,   9,  16,  24, 30, 47,  88, 127, 161, 180, 213, 284, 376, 499, 713, 959 };
-static const int RedCalibrationData[CalibrationVectorSize]    = {  7,  18,  27,  39, 47, 73, 141, 196, 228, 256, 309, 379, 483, 616, 803, 981 };
-static const int YellowCalibrationData[CalibrationVectorSize] = {  5,  16,  24,  33, 43, 66, 132, 177, 220, 253, 289, 385, 465, 600, 813, 980 };
-static const int GreenCalibrationData[CalibrationVectorSize]  = {  7,  14,  23,  32, 42, 65, 123, 168, 213, 241, 274, 371, 450, 575, 789, 970 };
+static const byte CalibrationVectorSize = 12;
+static const int Aperture[CalibrationVectorSize]              = {19, 29,  37,  53,  70,  79,  90, 103, 113, 121, 131, 136};
+static const int BlueCalibrationData[CalibrationVectorSize]   = {30, 82, 105, 260, 456, 553, 650, 780, 828, 858, 904, 923};
+static const int RedCalibrationData[CalibrationVectorSize]    = {22, 59,  85, 199, 380, 494, 596, 725, 770, 798, 880, 905};
+static const int YellowCalibrationData[CalibrationVectorSize] = {22, 63,  89, 221, 410, 513, 624, 752, 799, 822, 892, 915};
+static const int GreenCalibrationData[CalibrationVectorSize]  = {28, 74,  90, 233, 423, 532, 621, 760, 814, 846, 897, 915};
 
 #endif//CALIBRATION_DATA_H
 
