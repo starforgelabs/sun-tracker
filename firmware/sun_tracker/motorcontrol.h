@@ -27,10 +27,10 @@
 class MotorControl
 {
   // Motor control values are abstracted between 
-  // -180.0 degrees to +180.0 degress, in tenths of a degree. 
+  // -90.0 degrees to +90.0 degress, in tenths of a degree. 
   public: 
-  static const int Max =  1800;
-  static const int Min = -1800;
+  static const int Max =  900;
+  static const int Min = -900;
   
   public:
   MotorControl() : target(0) {}
