@@ -18,6 +18,7 @@
 static const byte SensorCount = 4;
 const static byte SensorPins[SensorCount] = {BlueSensorPin, RedSensorPin, YellowSensorPin, GreenSensorPin};
 
+// TODO: It looks like I don't have any valid sensor data. These values are garbage. Just redo them.
 static const byte CalibrationVectorSize = 12;
 static const int Aperture[CalibrationVectorSize]              = {19, 29,  37,  53,  70,  79,  90, 103, 113, 121, 131, 136};
 static const int BlueCalibrationData[CalibrationVectorSize]   = {30, 82, 105, 260, 456, 553, 650, 780, 828, 858, 904, 923};
