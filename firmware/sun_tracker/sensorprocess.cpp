@@ -35,8 +35,20 @@ bool SensorProcess::execute()
   // What this does is it makes the delay at least 1mS rather than 
   // 1mS + the amount of processing time. 
   hibernate(10); 
-  sensors->ReadAndNormalize();
-  
+  if(!sensors->ReadAndNormalize())
+  {
+    int errorValue = -(int)sensors->StatusCode();
+    readings->blue.raw          = errorValue;
+    readings->blue.normalized   = errorValue;
+    readings->red.raw           = errorValue;
+    readings->red.normalized    = errorValue;
+    readings->yellow.raw        = errorValue;
+    readings->yellow.normalized = errorValue;
+    readings->green.raw         = errorValue;
+    readings->green.normalized  = errorValue;
+    return true;
+  }
+
   // Cache readings
   readings->blue.raw          = sensors->Values[blueIndex];
   readings->blue.normalized   = sensors->Normalized[blueIndex];

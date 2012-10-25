@@ -26,7 +26,21 @@
 #include "motorprocess.h"
 #include "sensorprocess.h"
 
-DataNormalizer sensors(SensorCount, SensorPins, CalibrationVectorSize, CalibrationVectors, Aperture);
+////////////////////////////////////////////////////////////////////////////////
+//
+// Sensors
+//
+////////////////////////////////////////////////////////////////////////////////
+
+BaseAnalogRead* sources[SensorCount] =
+{
+  new AveragingAnalogRead(BlueSensorPin),
+  new AveragingAnalogRead(RedSensorPin),
+  new AveragingAnalogRead(YellowSensorPin),
+  new AveragingAnalogRead(GreenSensorPin)
+};
+const int* CalibrationVectors[SensorCount];
+DataNormalizer sensors;
 
 ////////////////////////////////////////////////////////////////////////////////
 //
@@ -61,6 +75,12 @@ SCMScheduler scheduler(processList, ProcessCount);
 void setup()
 {
   Serial.begin(9600);
+  
+  CalibrationVectors[0] = BlueCalibrationData;
+  CalibrationVectors[1] = RedCalibrationData;
+  CalibrationVectors[2] = YellowCalibrationData;
+  CalibrationVectors[3] = GreenCalibrationData;
+  sensors.configure(SensorCount, sources, CalibrationVectorSize, CalibrationVectors, Aperture);
 
   processList[0] = NULL;// &baseMotorProcess;
   processList[1] = NULL;//&sensorMotorProcess;
