@@ -19,12 +19,12 @@ static const byte SensorCount = 4;
 const static byte SensorPins[SensorCount] = {BlueSensorPin, RedSensorPin, YellowSensorPin, GreenSensorPin};
 
 // TODO: It looks like I don't have any valid sensor data. These values are garbage. Just redo them.
-static const byte CalibrationVectorSize = 12;
-static const int Aperture[CalibrationVectorSize]              = {19, 29,  37,  53,  70,  79,  90, 103, 113, 121, 131, 136};
-static const int BlueCalibrationData[CalibrationVectorSize]   = {30, 82, 105, 260, 456, 553, 650, 780, 828, 858, 904, 923};
-static const int RedCalibrationData[CalibrationVectorSize]    = {22, 59,  85, 199, 380, 494, 596, 725, 770, 798, 880, 905};
-static const int YellowCalibrationData[CalibrationVectorSize] = {22, 63,  89, 221, 410, 513, 624, 752, 799, 822, 892, 915};
-static const int GreenCalibrationData[CalibrationVectorSize]  = {28, 74,  90, 233, 423, 532, 621, 760, 814, 846, 897, 915};
+static const byte CalibrationVectorSize = 10;
+static const int Aperture[CalibrationVectorSize]              = {00,  30,  43,  54,  65,  74,  90, 100, 123, 133};
+static const int BlueCalibrationData[CalibrationVectorSize]   = {34, 189, 317, 425, 559, 663, 805, 871, 933, 960};
+static const int RedCalibrationData[CalibrationVectorSize]    = {26, 157, 292, 435, 549, 649, 793, 863, 930, 972};
+static const int YellowCalibrationData[CalibrationVectorSize] = {36, 187, 326, 420, 581, 688, 827, 885, 951, 978};
+static const int GreenCalibrationData[CalibrationVectorSize]  = {26, 146, 265, 395, 515, 613, 760, 834, 978, 970};
 
 #endif//CALIBRATION_DATA_H
 
