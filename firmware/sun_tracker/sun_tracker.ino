@@ -24,6 +24,7 @@
 #include "auxiliaryinputprocess.h"
 #include "diagnosticprocess.h"
 #include "motorprocess.h"
+#include "seekerprocess.h"
 #include "sensorprocess.h"
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -67,8 +68,9 @@ MotorProcess sensorMotorProcess;
 AuxiliaryInputProcess auxInputProcess;
 SensorProcess sensorProcess;
 DiagnosticProcess diagnosticProcess;
+SeekerProcess seekerProcess;
 
-static const byte ProcessCount = 5;
+static const byte ProcessCount = 6;
 SCMProcess* processList[ProcessCount];
 SCMScheduler scheduler(processList, ProcessCount);
 
@@ -82,16 +84,18 @@ void setup()
   CalibrationVectors[3] = GreenCalibrationData;
   sensors.configure(SensorCount, sources, CalibrationVectorSize, CalibrationVectors, Aperture);
 
-  processList[0] = NULL;// &baseMotorProcess;
-  processList[1] = NULL;//&sensorMotorProcess;
+  processList[0] = &baseMotorProcess;
+  processList[1] = &sensorMotorProcess;
   processList[2] = &auxInputProcess;
   processList[3] = &sensorProcess;
   processList[4] = &diagnosticProcess;
+  processList[5] = &seekerProcess;
   
   diagnosticProcess.configure(&auxInput, &sensorReadings);
   sensorProcess.configure(&sensors, &sensorReadings);
   auxInputProcess.configure(AuxillaryInputPin, &auxInput);
   baseMotorProcess.configure(LowerServoPin, &baseControl, BaseServoLowBound, BaseServoMidpoint, BaseServoUpperBound);
+  seekerProcess.configure(&sensorReadings, &baseControl, &sensorControl);
   sensorMotorProcess.configure(UpperServoPin, &sensorControl, SensorServoLowBound, SensorServoMidpoint, SensorServoUpperBound);  
 }
 

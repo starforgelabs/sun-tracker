@@ -36,6 +36,7 @@ class MotorControl
   MotorControl() : target(0) {}
     
   void home() { target = 0; }
+  void moveDelta(int aDelta) { setTarget(target + aDelta); }
   
   int getTarget() { return target; }
   void setTarget(int aValue) { target = constrain(aValue, Min, Max); }
