@@ -24,24 +24,11 @@ class DiagnosticProcess : public SCMProcess
   virtual bool execute();
   
   private:
-  enum DxProgram {dpInit, dpAppInfo, dpIdle, dpBlueInfo, dpRedInfo, dpYellowInfo, dpGreenInfo};
-  
-  private:
   AuxiliaryInput* input;
+  char lastProgram;
+  char* pc;
   SensorReadings* sensors;
   
-  bool isClearing;
-  DxProgram currentProgram;
-  DxProgram lastDisplayProgram;
-  
-  boolean clearDisplay();
-  void idle();
-  void initializeDisplay();
-  void displayAppInfo();
-  void displayBlueInfo();
-  void displayRedInfo();
-  void displayYellowInfo();
-  void displayGreenInfo();
   void writeColourInfo(char* aName, SensorReading* aReading);
 };
 
