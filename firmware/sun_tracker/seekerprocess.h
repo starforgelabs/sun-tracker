@@ -17,6 +17,8 @@
 #include "sensorprocess.h"
 #include "motorcontrol.h"
 
+enum SeekerDeltas {ygDelta, ybDelta, yrDelta, gbDelta,  grDelta, brDelta};
+
 class SeekerProcess : public SCMProcess
 {
   public:
@@ -27,6 +29,10 @@ class SeekerProcess : public SCMProcess
   SensorReadings* sensors;
   MotorControl* baseMotor;
   MotorControl* sensorMotor;
+  int Deltas[6];
+  int baseRailCount;
+  
+  void getDeltas();
 };
 
 #endif//SEEKER_PROCESS_H
