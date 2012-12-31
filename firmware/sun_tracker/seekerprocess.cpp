@@ -12,6 +12,16 @@
 
 #include "seekerprocess.h"
 
+void SeekerProcess::configure(SensorReadings* aSensorReadings, MotorControl* aBaseMotorControl, MotorControl* aSensorMotorControl)
+{
+  sensors = aSensorReadings;
+  baseMotor = aBaseMotorControl;
+  sensorMotor = aSensorMotorControl;
+  
+  hibernate(3000);
+  resume();
+}
+
 bool SeekerProcess::execute()
 {
   if(!SCMProcess::execute()) return false;
@@ -53,13 +63,4 @@ bool SeekerProcess::execute()
   hibernate(1);
 }
 
-void SeekerProcess::configure(SensorReadings* aSensorReadings, MotorControl* aBaseMotorControl, MotorControl* aSensorMotorControl)
-{
-  sensors = aSensorReadings;
-  baseMotor = aBaseMotorControl;
-  sensorMotor = aSensorMotorControl;
-  
-  hibernate(3000);
-  resume();
-}
 
