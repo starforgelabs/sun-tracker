@@ -88,7 +88,8 @@ void setup()
   processList[1] = &sensorMotorProcess;
   processList[2] = &auxInputProcess;
   processList[3] = &sensorProcess;
-  processList[4] = &diagnosticProcess;
+//  processList[4] = &diagnosticProcess;
+  processList[4] = NULL;
   processList[5] = &seekerProcess;
   
   diagnosticProcess.configure(&auxInput, &sensorReadings);
