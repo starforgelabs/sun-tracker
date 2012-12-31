@@ -40,9 +40,11 @@ bool SeekerProcess::execute()
   
   getDeltas();
   
+  // xxxDelta is how much delta to move a motor.
   int baseDelta = 0;
   int sensorDelta = 0;
-  
+
+  // xxxPairName is the sensor pair to use for decision making.   
   int basePairName   = abs(Deltas[brDelta]) > abs(Deltas[ygDelta]) ? brDelta : ygDelta;
   int sensorPairName = abs(Deltas[ybDelta]) > abs(Deltas[grDelta]) ? ybDelta : grDelta;
 
@@ -51,7 +53,8 @@ bool SeekerProcess::execute()
 
   if(abs(Deltas[sensorPairName]) > 3)
     sensorDelta = -sgn(Deltas[sensorPairName]);
-    
+
+  // Invert base motor direction if the sensor board is turned around.    
   if(sensorMotor->getTarget() < 0)
     baseDelta = -baseDelta;
     
@@ -79,7 +82,7 @@ bool SeekerProcess::execute()
     return true;
   }
     
-  hibernate(2);
+  hibernate(1);
   return true;
 }
 
